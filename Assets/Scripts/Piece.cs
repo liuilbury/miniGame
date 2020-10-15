@@ -8,7 +8,7 @@ namespace Game
     {
         public GameObject Text;
         public Player Player;
-        public float x,y;
+        public float x, y;
         private int number;
         private Belong belong = Belong.None;
         private string number_str;
@@ -19,6 +19,7 @@ namespace Game
             Own = 2,
             Enemy = 3,
         }
+
         public void Start()
         {
             number = 0;
@@ -35,21 +36,26 @@ namespace Game
             {
                 gameObject.SetActive(false);
             }
+
+            if (Math.Abs(x - Player.x) + Math.Abs(y - Player.y) == 0)
+            {
+                Player.number += number;
+                number = 0;
+            }
+
             if (belong != Belong.None)
             {
                 number += 1;
                 number_str = number.ToString();
             }
-            Text.GetComponent<Text>().text = number_str;
-        }
 
-        public void debug()
-        {
-            Debug.Log(x + y);
+            Text.GetComponent<Text>().text = number_str;
         }
 
         public void ChangeBelong()
         {
+            Player.number += number + 1;
+            number = -1;
             number_str = number.ToString();
             belong = Belong.Own;
             this.gameObject.GetComponent<Image>().color = Color.gray;
