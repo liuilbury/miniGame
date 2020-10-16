@@ -15,9 +15,10 @@ namespace Game
         private int turn;
         public int number;
         private string number_str;
+
         private void Start()
         {
-            number = 0;
+            Board.CreateBase(x,y);
             double dx = Screen.height * 1.0 / 20;
             float bg_x = (float) (Screen.width - Screen.height) / 2;
             Debug.Log("player");
@@ -45,29 +46,40 @@ namespace Game
             {
                 turn = 4;
             }
+            else if (Input.GetKeyDown(KeyCode.Return))
+            {
+                turn = 5;
+            }
         }
 
         private void Move()
         {
-            if (turn == 0)
+            if (turn == 0 || number <= 0)
             {
-                
             }
-            else if (turn==1)
+            else if (turn == 1)
             {
                 if (y != Board.pieceY - 1) y++;
             }
-            else if (turn==2)
+            else if (turn == 2)
             {
                 if (x != 0) x--;
             }
-            else if (turn==3)
+            else if (turn == 3)
             {
                 if (y != 0) y--;
             }
-            else if (turn==4)
+            else if (turn == 4)
             {
                 if (x != Board.pieceX - 1) x++;
+            }
+            else if (turn == 5)
+            {
+                if (number >= 20)
+                {
+                    number -= 20;
+                    Board.CreateBase(x,y);
+                }
             }
             turn = 0;
             gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2((float) (dx), (float) (dx));

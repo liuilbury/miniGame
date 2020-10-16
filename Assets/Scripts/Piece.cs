@@ -22,7 +22,7 @@ namespace Game
 
         public void Start()
         {
-            number = 0;
+            number = -2;
             InvokeRepeating("AddNumber", 0.0f, Game01.Frame);
         }
 
@@ -42,8 +42,7 @@ namespace Game
                 Player.number += number;
                 number = 0;
             }
-
-            if (belong != Belong.None)
+            else if (belong != Belong.None)
             {
                 number += 1;
                 number_str = number.ToString();
@@ -54,8 +53,8 @@ namespace Game
 
         public void ChangeBelong()
         {
-            Player.number += number + 1;
-            number = -1;
+            Player.number += number+1;
+            number = 0;
             number_str = number.ToString();
             belong = Belong.Own;
             this.gameObject.GetComponent<Image>().color = Color.gray;

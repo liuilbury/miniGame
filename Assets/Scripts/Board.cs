@@ -7,17 +7,18 @@ namespace Game
 {
     public class Board : MonoBehaviour
     {
+        public GameObject basePrefab;
         public GameObject piecePrefab;
         public int pieceX;
         public int pieceY;
         private Piece[,] _pieces;
-
+        private double dx, dy,bg_x;
         public void Start()
         {
             Debug.Log("Board");
-            var dx = Screen.height * 1.0 / 20;
-            var dy = Screen.height * 1.0 / 20;
-            float bg_x = (float) (Screen.width - Screen.height) / 2;
+            dx = Screen.height * 1.0 / pieceX;
+            dy = Screen.height * 1.0 / pieceY;
+            bg_x = (float) (Screen.width - Screen.height) / 2;
             _pieces = new Piece[pieceX, pieceY];
             for (int i = 0; i < pieceX; i++)
             {
@@ -40,6 +41,13 @@ namespace Game
             _pieces[x, y].ChangeBelong();
         }
 
+        public void CreateBase(int x,int y)
+        {
+            var ba = Instantiate(basePrefab, transform);
+            ba.GetComponent<RectTransform>().sizeDelta = new Vector2((float) (dx), (float) (dx));
+            ba.GetComponent<RectTransform>().position =
+                new Vector3((float) ((float) (dx * (x)) + bg_x + dx / 2), (float) (dy * (y) + dx / 2), 0);
+        }
         void Update()
         {
         }
